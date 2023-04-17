@@ -11,6 +11,8 @@ class HParams(object):
     # STFT parameters
     stft_channels = 1024 # Number of frequency channels
     hop_size = 256 # Hop size
+
+    window = {'name': 'hann', 'M': stft_channels} # Window function for the STFT (if not Gaussian)
     
     stft_dynamic_range_dB = 50 # dynamic range in dB for the STFT
     normalize = True # Normalize STFT

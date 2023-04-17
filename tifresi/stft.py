@@ -7,6 +7,76 @@ from tifresi.phase.modGabPhaseGrad import modgabphasegrad
 from tifresi.phase.pghi import pghi
 
 
+
+class PhaseGradTF(object):
+    """Phase Gradient Time Frequency transform object based on a user defined window.
+    
+    The Gauss window is necessary to apply the PGHI (Phase gradient heap integration) algorithm.
+    """
+
+    def __init__(self, window=p.window, hop_size=p.hop_size, stft_channels=p.stft_channels):
+        assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
+        self.hop_size = hop_size
+        self.stft_channels = stft_channels
+        self._analysis_window = window
+
+
+    def dgt(self, x):
+        """Compute the DGT of a real signal."""
+        hop_size = self.hop_size
+        stft_channels = self.stft_channels
+        assert (len(x.shape) == 1)
+        assert (np.mod(len(x), hop_size) == 0)
+        assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
+        assert (np.mod(len(x), stft_channels) == 0)
+        g_analysis = self._analysis_window
+        return dgtreal(x.astype(np.float64), g_analysis, hop_size, stft_channels)[0]
+
+    def idgt(self, X):
+        """Compute the inverse DGT of real signal x with the dual window."""
+        hop_size = self.hop_size
+        stft_channels = self.stft_channels
+        assert (len(X.shape) == 2)
+        assert (np.mod(stft_channels, 2) == 0), 'The number of stft channels needs to be even'
+        assert (X.shape[0] == stft_channels // 2 + 1)
+        g_synthesis = self._synthesis_window
+        return idgtreal(X.astype(np.complex128), g_synthesis, hop_size, stft_channels)[0]
+    
+
+
+    def invert_mag_phase_grad(self, spectrogram, tgrad, fgrad):
+        """Invert a spectrogram by reconstructing the phase with PGHI."""
+        hop_size = self.hop_size
+        stft_channels = self.stft_channels
+
+        audio_length = hop_size * spectrogram.shape[1]
+
+
+        phase = pghi(spectrogram, tgrad, fgrad, hop_size, stft_channels, audio_length)
+
+        reComplexStft = spectrogram * np.exp(1.0j * phase)
+
+        return self.idgt(reComplexStft)
+
+
+    def mag_phase_grad(self, time_signal, normalize=p.normalize):
+        """Compute the magnitude and phase gradient of a real signal."""
+        stft = self.dgt(time_signal)
+
+        magSpectrogram = np.abs(stft)
+
+        if normalize:
+            magSpectrogram = magSpectrogram / np.max(magSpectrogram)
+
+        tgrad, fgrad = modgabphasegrad('phase', np.angle(stft), self.hop_size, self.stft_channels)
+        return magSpectrogram, tgrad, fgrad
+
+    @property
+    def _synthesis_window(self):
+        return {'name': ('dual', self._analysis_window["name"])}
+
+
+
 class GaussTF(object):
     """Time frequency transform object based on a Gauss window.
     

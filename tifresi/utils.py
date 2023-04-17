@@ -38,3 +38,26 @@ def downsample_tf_time(mel, rr):
     for i in range(rr):
         tmp += mel[:, i::rr]
     return tmp / rr
+
+
+
+def unwrap_s(series):
+    """Unwrap a series of values in the range [-pi, pi]."""
+    res = [series[0]]
+    jump = 0
+    v = -np.diff(series)
+#     print(np.max(v))
+    for val,d in zip(series[1:], v):
+        if d>np.pi:
+            jump += 2*np.pi
+        elif d<-np.pi:
+            jump -= 2*np.pi
+        res.append(jump+val)
+    return np.array(res)
+
+def unwrap(mat):
+    """Unwrap a matrix of values in the range [-pi, pi]."""
+    matres = np.zeros(mat.shape)
+    for i, lin in enumerate(mat):
+        matres[i] = unwrap_s(lin)
+    return matres

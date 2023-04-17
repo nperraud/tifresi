@@ -4,7 +4,7 @@ import sys
 
 import numpy as np
 
-from tifresi.stft import GaussTF, GaussTruncTF
+from tifresi.stft import GaussTF, GaussTruncTF, PhaseGradTF
 
 
 def test_stft_different_length(a = 128, M = 1024, trunc=False):
@@ -76,7 +76,18 @@ def test_stft_different_channels(a = 128, M = 1024, trunc=False):
         assert (np.linalg.norm(x1024dot - x) < 1e-12)
         assert (np.linalg.norm(x512dot - x) < 1e-12)
 
-def main():
+def test_PhasGradTF():
+    y = np.random.randn(1024*256)
+    stft_system = PhaseGradTF()
+
+    X = stft_system.dgt(y)
+    y2 = stft_system.idgt(X)
+    np.testing.assert_allclose(y, y2, atol=1e-14)
+    magSpectrogram, tgrad, fgrad = stft_system.mag_phase_grad(y)
+    y_reconstructed = stft_system.invert_mag_phase_grad(magSpectrogram, tgrad, fgrad)
+
+
+def test_main():
     combinations = [
         (128, 1024),
         (128, 512),
@@ -89,5 +100,3 @@ def main():
             test_stft_different_hop_size(a,M, trunc)
             test_stft_different_channels(a,M, trunc)
 
-if __name__ == "__main__":
-    main()
