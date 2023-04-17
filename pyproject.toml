@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "tifresi"
+version = "0.1.6"
+description = "Time Frequency Spectrogram Inversion"
+authors = ["Andrés Marafioti, Nathanael Perraudin, Nicki Hollighaus"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+Cython = "*"
+numba = "*"
+numpy = "*"
+librosa = "*"
+matplotlib = "*"
+ltfatpy = {git = "ssh://git@github.com/nperraud/ltfatpy.git"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+flake8 = "*"
+jupyterlab = "*"
+twine = "*"
+setuptools = "*"
+wheel = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
