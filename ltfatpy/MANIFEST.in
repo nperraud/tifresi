@@ -1,0 +1,13 @@
+recursive-include ltfat_C_kernel *.c *.h *.txt
+recursive-include ltfatpy/comp *.c *.pyx
+recursive-include doc *.rst *.py *.png *.bib
+prune ltfat_C_kernel/tests
+prune ltfat_C_kernel/lib
+#prune ltfatpy/tests
+graft cmake-modules
+include *.txt
+include *.rst
+include VERSION
+exclude tests_results.txt
+exclude requirements*
+exclude copyright*

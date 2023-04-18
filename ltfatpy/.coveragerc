@@ -1,0 +1,6 @@
+[run]
+source=./ltfatpy
+omit = ./ltfatpy/tests/*
+
+[html]
+directory=./build/htmlcov

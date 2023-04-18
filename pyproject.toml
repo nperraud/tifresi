@@ -13,7 +13,7 @@ numba = "*"
 numpy = "*"
 librosa = "*"
 matplotlib = "*"
-ltfatpy = {git = "ssh://git@github.com/nperraud/ltfatpy.git"}
+ltfatpy = {path = "ltfatpy", develop = true}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"

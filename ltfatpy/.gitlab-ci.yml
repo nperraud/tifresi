@@ -1,0 +1,50 @@
+# CI Config for ltaftpy / gitlab
+
+# Tests on X86_64 ubuntu
+ubuntu:X86_64:
+  image: registry.gitlab.lis-lab.fr:5005/dev/ltfatpy/ubuntu:X86_64
+  tags:
+    - docker
+  script:
+    - pip3 install -e . --no-deps
+    - py.test-3
+  artifacts:
+    when: always
+    untracked: true
+    paths:
+      - build
+    expire_in: 8d
+
+# Tests on i686 ubuntu
+ubuntu:i686:
+  image: registry.gitlab.lis-lab.fr:5005/dev/ltfatpy/ubuntu:i686
+  tags:
+    - docker
+  script:
+    - pip3 install -e . --no-deps
+    - py.test-3
+  artifacts:
+    when: always
+    untracked: true
+    paths:
+      - build
+    expire_in: 8d
+
+# doc template
+.doc: &doc
+  script:
+    - pip3 install -e . --no-deps
+    - python3 setup.py build_sphinx
+    - cp -r build/sphinx/html public
+  artifacts:
+    paths:
+      - public
+
+# Doc Generation
+pages:
+  <<: *doc
+  image: registry.gitlab.lis-lab.fr:5005/dev/ltfatpy/ubuntu:X86_64
+  tags:
+    - docker
+  only:
+    - master

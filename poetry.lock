@@ -1407,7 +1407,7 @@ category = "main"
 optional = false
 python-versions = "*"
 files = []
-develop = false
+develop = true
 
 [package.dependencies]
 cmake = "*"
@@ -1418,10 +1418,8 @@ scipy = ">=0.18"
 six = ">=1.10"
 
 [package.source]
-type = "git"
-url = "ssh://git@github.com/nperraud/ltfatpy.git"
-reference = "HEAD"
-resolved_reference = "633aafa76e94b177a1f032af4ecce8983edc5043"
+type = "directory"
+url = "ltfatpy"
 
 [[package]]
 name = "markdown-it-py"
@@ -3250,4 +3248,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10"
-content-hash = "bf82dd14b4364e24150ccf3f8f6ca25756574111fb5182adc1b74bf05fb76d5d"
+content-hash = "c863aa955949b41c17f65e229cbc928668308affc7b9fb77f9ab973a49304cd9"

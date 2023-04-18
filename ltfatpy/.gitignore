@@ -1,0 +1,96 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.a
+*.mexmaci64
+*.mexa64
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files #
+################
+*~
+*.bkup
+*.old
+
+# Directories #
+###############
+build/
+doc/_*
+.svn/
+.settings/
+.ipynb_checkpoints/
+ltfatpy/__pycache__/
+ltfatpy/comp/__pycache__/
+ltfatpy/comp/tests/__pycache__/
+ltfatpy/fourier/__pycache__/
+ltfatpy/fourier/tests/__pycache__/
+ltfatpy.egg-info/
+
+# Eclipse files #
+#################
+
+.project
+.pydevproject
+
+# PyCharm #
+###########
+.idea
+
+# Ipython files #
+#################
+
+*.ipynb
+*.pyc
+
+# Binaries #
+############
+
+bin/test*
+
+# Others #
+##########
+
+tests_results.txt
+pytests_results.txt
+.coverage
+.html
+.png
+.eggs
+LtfatPyt.egg-info/
+.cache/
+dist/
+MANIFEST
+

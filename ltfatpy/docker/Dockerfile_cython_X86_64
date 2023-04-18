@@ -1,0 +1,36 @@
+FROM ubuntu:latest
+MAINTAINER Denis Arrivault
+WORKDIR /
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        cmake \
+        gcc \
+        g++ \
+        make \
+        libfftw3-dev \
+        liblapack-dev \
+        cython3 \
+        python3 \
+        python3-dev \
+        python3-setuptools \
+        python3-pytest \
+        python3-pytest-cov \
+        python3-coverage \
+        libjs-jquery-hotkeys \
+        libjs-jquery-isonscreen \
+        libjs-jquery-tablesorter \
+        python3-pip \
+        python3-wheel \
+        python3-tk \
+        python3-matplotlib \
+        python3-scipy \
+        texlive-latex-extra \
+        dvipng \
+        && \
+    apt-get clean
+RUN pip3 install --no-deps pytest-randomly
+RUN pip3 install sphinx sphinxcontrib-bibtex
+
+# Copy the ltfatpy sdist in the docker directory and uncomment the following line
+# if you want to include ltfatpy sources in the docker image :
+# ADD ../dist/ltfatpy-1.0.8.tar.gz /
