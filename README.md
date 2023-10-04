@@ -23,16 +23,59 @@ This repository use the ltfatpy packages that requires a few libraries to be ins
     ```
     pip install cython
     ```
-3. Install the package from pypi
+3. Install the package from source
     ```
-    pip install tifresi
-    ```   
-    or from source
-    ```
-    git clone https://github.com/andimarafioti/tifresi
+    git clone git@github.com:nperraud/tifresi.git
     cd tifresi
     pip install .
     ```       
+
+
+## Installation using conda (tested on an M1 mac)
+
+1. Create a conda environment
+    ```
+    conda create -n tifresi python=3.10
+    conda activate tifresi
+    ```
+2. Install `fftw3`, `lapack` and `cmake`
+    ```
+    conda install -c conda-forge fftw lapack cmake
+    ```
+3. Install cython (required for installing ltfatpy):
+    ```
+    conda install cython
+    ```
+
+4. Install the package from source
+    ```
+    git clone git@github.com:nperraud/tifresi.git
+    cd tifresi
+    pip install -e ".[dev]"
+    ```
+    Here, the `-e` option is important as it allows to modify the source code without reinstalling the package.
+    The `.[dev]` option install the package with the dependencies required for development (pytest, flake8, etc.).
+
+Troubleshooting:
+  * Pip fails, update pip
+    ```
+    python -m pip install --upgrade pip
+    ```
+  * If `librhash.dylib` or `librhash.0.dylib` is missing, install `rhash`
+    ```
+    conda install -c anaconda rhash
+    ```
+    On a mac, you may need to create a symlink
+    ```
+    ln -s ~/miniconda3/envs/tifresi/lib/librhash.dylib ~/miniconda3/envs/tifresi/lib/librhash.0.dylib
+    ```
+    Here `tifresi` is the name of the conda environment.
+  * If you have error like ` Cannot convert 'const double complex *' to Python object`, you may need to recompile the cython files:
+    ```
+    find ltfatpy/comp -name '*.pyx' -exec cython -2 {} \;
+    ```
+    The problem is likely that `-2` argument is missing in the automatic configuration. I do not know how to fix this issue yet.
+
 
 ## Starting
 After installation of the requirements, you can check the following notebooks:

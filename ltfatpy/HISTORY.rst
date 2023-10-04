@@ -18,7 +18,7 @@ Update the .c file with a newer version of cython
 
 .. code:: bash
 
-    find ltfatpy/comp -name '*.pyx' -exec cython {} \;
+    find ltfatpy/comp -name '*.pyx' -exec cython -2 {} \;
 
 Pip install now works on newer version of python >= 3.8.
 The procedure has been tested on mac with an arm processor.
