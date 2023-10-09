@@ -42,6 +42,10 @@ This repository use the ltfatpy packages that requires a few libraries to be ins
     ```
     conda install -c conda-forge fftw lapack cmake
     ```
+    If it cannot resolve the environnement, you can try:
+    ```
+    conda install fftw lapack cmake
+    ```
 3. Install cython (required for installing ltfatpy):
     ```
     conda install cython
