@@ -67,7 +67,7 @@ from distutils.command.clean import clean
 from distutils.command.sdist import sdist
 
 # Test if Cython is installed
-USE_CYTHON = True
+USE_CYTHON = False
 try:
     from Cython.Distutils import build_ext
 except ImportError:
@@ -235,6 +235,7 @@ def makeExtension(extName, fileExt, lib_dir):
         extName,
         [extPath],
         language="c",
+        # extra_compile_args=['-O3', '-2'],
         extra_compile_args=['-O3'],
         libraries=["fftw3", "m", "blas", "lapack"],
         extra_objects=[os.path.join(lib_dir, "libltfat.a"),
